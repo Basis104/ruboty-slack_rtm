@@ -1,3 +1,4 @@
+require 'logger'
 require 'json'
 require 'websocket-client-simple'
 
@@ -66,6 +67,9 @@ module Ruboty
           loop do
             sleep(30)
             @client.send('', type: 'ping')
+          rescue e
+            logger = Logger.new('/tmp/ruboty-slack-error.log')
+            logger.error("error: #{e.message}")
           end
         end
       end
